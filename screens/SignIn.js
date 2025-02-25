@@ -7,16 +7,26 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { logIn } from "../store/authentication";
 
-function SignIn({ navigation }) {
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const storedEmail = useSelector((state) => state.auth.email);
+  const storedPassword = useSelector((state) => state.auth.password);
 
   function handleSignIn() {
-    console.log("Email:", email);
-    console.log("Password:", password);
-    navigation.navigate("Tabs");
+    if (email && password) {
+      if (email === storedEmail && password === storedPassword) {
+        dispatch(logIn({ email, password }));
+      } else {
+        Alert.alert("Invalid credentials, make sure you are registered.");
+      }
+    }
   }
 
   return (

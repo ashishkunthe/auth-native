@@ -1,6 +1,15 @@
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+import { logOut } from "../store/authentication";
 
-function Profile() {
+function Profile({ navigation }) {
+  const dispatch = useDispatch();
+
+  function handleLogout() {
+    dispatch(logOut()); // Clear Redux authentication state
+    navigation.replace("SignIn"); // Redirect to SignIn screen
+  }
+
   return (
     <View style={styles.container}>
       {/* Profile Picture */}
@@ -18,6 +27,11 @@ function Profile() {
       {/* Edit Profile Button */}
       <TouchableOpacity style={styles.editButton}>
         <Text style={styles.buttonText}>Edit Profile</Text>
+      </TouchableOpacity>
+
+      {/* Logout Button */}
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
     </View>
   );
@@ -56,6 +70,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 8,
     marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  logoutButton: {
+    backgroundColor: "#E74C3C", // Red Logout button
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    marginTop: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,

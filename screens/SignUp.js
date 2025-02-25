@@ -8,16 +8,18 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { signUp } from "../store/authentication";
 
 function SignUp({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
+  const dispatch = useDispatch();
 
   function handleSignUp() {
     if (email && password) {
-      console.log("Email:", email);
-      console.log("Password:", password);
+      dispatch(signUp({ email, password })); // Save user in Redux
       setIsSubmit(true);
       navigation.navigate("SignIn");
     }
